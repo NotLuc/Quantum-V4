@@ -1,3 +1,4 @@
+
 #pragma config(Sensor, dgtl1,  flyWheelEnc,    sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  leftDriveEnc,   sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  rightDriveEnc,  sensorQuadEncoder)
@@ -31,6 +32,7 @@ void pre_auton()
   // manage all user created tasks if set to false.
   bStopTasksBetweenModes = true;
 
+
 	// Set bDisplayCompetitionStatusOnLcd to false if you don't want the LCD
 	// used by the competition include file, for example, you might want
 	// to display your team name on the LCD in this function.
@@ -46,5 +48,9 @@ task autonomous(){
 }
 
 task usercontrol(){
+	clearLCDLine(0);
+	clearLCDLine(1);
+	datalogDataGroupStart();
   startTask(drive);
+  datalogDataGroupEnd();
 }
