@@ -1,7 +1,7 @@
-
 #pragma config(Sensor, dgtl1,  flyWheelEnc,    sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  leftDriveEnc,   sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  rightDriveEnc,  sensorQuadEncoder)
+#pragma config(Sensor, dgtl7,  intakeSonic,    sensorSONAR_inch)
 #pragma config(Motor,  port2,           FrontLeft,     tmotorVex393HighSpeed_MC29, openLoop)
 #pragma config(Motor,  port3,           leftFlyWheel,  tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port4,           BackLeft,      tmotorVex393HighSpeed_MC29, openLoop)

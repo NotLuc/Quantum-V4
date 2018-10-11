@@ -15,11 +15,11 @@ int flyWheelInitialTime=0;
 double flyWheelAvgVelocity=0;
 char buffer[5];
 
-void flyWheelSlewUp(int seconds){
-	if(motor[leftFlyWheel]<127){
+void flyWheelSlewUp(int seconds, int finalSpeed){
+	if(motor[leftFlyWheel]<finalSpeed){
 	for(int x = 0; x<=seconds*10; x++){
-	motor[leftFlyWheel]+=(127/(seconds*10));
-	motor[rightFlyWheel]-=(127/(seconds*10));
+	motor[leftFlyWheel]+=(finalSpeed/(seconds*10));
+	motor[rightFlyWheel]-=(finalSpeed/(seconds*10));
 	wait1Msec(100);
 	int c2=vexRT[Ch2];
 	int c3=vexRT[Ch3];
@@ -35,6 +35,15 @@ void flyWheelSlewUp(int seconds){
 		}
 		if(!vexRT[Btn5U]&&!vexRT[Btn5D]){
 			motor[Intake]=0;
+		}
+	if(vexRT[Btn6U]){
+			motor[Flipper]=127;
+		}
+		if(vexRT[Btn6D]){
+			motor[Flipper]=-127;
+		}
+		if(!vexRT[Btn6U]&&!vexRT[Btn6D]){
+			motor[Flipper]=0;
 		}
 	}
 }
@@ -42,11 +51,11 @@ motor[leftFlyWheel]=127;
 motor[rightFlyWheel]=-127;
 }
 
-void flyWheelSlewDown(int seconds){
+void flyWheelSlewDown(int seconds, int finalSpeed){
 	if(motor[leftFlyWheel]>0){
 	for(int x = 0; x<=seconds*10; x++){
-	motor[leftFlyWheel]-=(127/(seconds*10));
-	motor[rightFlyWheel]+=(127/(seconds*10));
+	motor[leftFlyWheel]-=(finalSpeed/(seconds*10));
+	motor[rightFlyWheel]+=(finalSpeed/(seconds*10));
 	wait1Msec(100);
 	int c2=vexRT[Ch2];
 	int c3=vexRT[Ch3];
@@ -62,6 +71,15 @@ void flyWheelSlewDown(int seconds){
 		}
 		if(!vexRT[Btn5U]&&!vexRT[Btn5D]){
 			motor[Intake]=0;
+		}
+	if(vexRT[Btn6U]){
+			motor[Flipper]=127;
+		}
+		if(vexRT[Btn6D]){
+			motor[Flipper]=-127;
+		}
+		if(!vexRT[Btn6U]&&!vexRT[Btn6D]){
+			motor[Flipper]=0;
 		}
 	}
 }
@@ -107,10 +125,10 @@ task drive(){while(true)
 
 		//Intake
 		if(vexRT[Btn5U]){
-			motor[Intake]=127;
+			motor[Intake]=-127;
 		}
 		if(vexRT[Btn5D]){
-			motor[Intake]=-127;
+			motor[Intake]=127;
 		}
 		if(!vexRT[Btn5U]&&!vexRT[Btn5D]){
 			motor[Intake]=0;
@@ -118,12 +136,20 @@ task drive(){while(true)
 
 		//Flywheel
 		if(vexRT[Btn8U] && (nSysTime-flyWheelTimer)>spinDownTime){
-			flyWheelSlewUp(spinUpTime);
+			flyWheelSlewUp(spinUpTime, 80);
 			flyWheelTimer=nSysTime;
 		}
 		if(vexRT[Btn8D] && (nSysTime-flyWheelTimer)>spinUpTime){
-			flyWheelSlewDown(spinDownTime);
+			flyWheelSlewDown(spinDownTime, 80);
 			flyWheelTimer=nSysTime;
+		}
+		if(vexRT[Btn8L]){
+			motor[leftFlyWheel]-=10;
+			motor[rightFlyWheel]+=10;
+		}
+		if(vexRT[Btn8R]){
+			motor[leftFlyWheel]+=10;
+			motor[rightFlyWheel]-=10;
 		}
 		wait10Msec(1);
 		flyWheelAvgVelocity=500*((sensorValue[flyWheelEnc])-flyWheelInitialPos)/(nSysTime-flyWheelInitialTime);

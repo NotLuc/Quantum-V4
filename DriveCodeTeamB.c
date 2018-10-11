@@ -27,10 +27,10 @@ task drive(){while(true)
 
 		//Intake
 		if(vexRT[Btn5U]){
-			motor[Intake]=127;
+			motor[Intake]=-127;
 		}
 		if(vexRT[Btn5D]){
-			motor[Intake]=-127;
+			motor[Intake]=127;
 		}
 		if(!vexRT[Btn5U]&&!vexRT[Btn5D]){
 			motor[Intake]=0;

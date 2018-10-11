@@ -17,8 +17,8 @@ void driveForward(int x){
 	while(rx>0&&lx>0){
 		motor[FrontLeft]=motor[BackLeft]=lx*20;
 		motor[FrontRight]=motor[BackRight]=-rx*20;
-		lx-=abs((SensorValue[leftDriveEnc]/360)*(int)(PI*(float)(4)));
-		rx-=abs((SensorValue[leftDriveEnc]/360)*(int)(PI*(float)(4)));
+		lx-=abs((SensorValue[leftDriveEnc]/360)*(int)(3.1415926*(float)(4)));
+		rx-=abs((SensorValue[leftDriveEnc]/360)*(int)(3.1415926*(float)(4)));
 	}
 }
 void driveBackwards(int x){
@@ -29,8 +29,8 @@ void driveBackwards(int x){
 	while(rx>0&&lx>0){
 		motor[FrontLeft]=motor[BackLeft]=-lx*20;
 		motor[FrontRight]=motor[BackRight]=rx*20;
-		lx-=abs((SensorValue[leftDriveEnc]/360)*(int)(PI*(float)(4)));
-		rx-=abs((SensorValue[leftDriveEnc]/360)*(int)(PI*(float)(4)));
+		lx-=abs((SensorValue[leftDriveEnc]/360)*(int)(3.1415926*(float)(4)));
+		rx-=abs((SensorValue[leftDriveEnc]/360)*(int)(3.1415926*(float)(4)));
 	}
 }
 void flyWheelSlewUp(int seconds){
@@ -56,7 +56,16 @@ void flyWheelSlewDown(int seconds){
 motor[leftFlyWheel]=0;
 motor[rightFlyWheel]=0;
 }
+
 task auton(){
+	flyWheelSlewUp(3);
+	motor[Intake]=127;
+	wait1Msec(3);
+	motor[Intake]=0;
+	motor[Flipper]=-127;
+	wait1Msec(1);
+	motor[Flipper]=0;
+	driveForward(12);
 
 
 
