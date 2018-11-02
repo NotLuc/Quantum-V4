@@ -27,7 +27,7 @@ void driveBackwards(int x){
 	SensorValue[rightDriveEnc]=0;
 
 	while(rx>0&&lx>0){
-		motor[FrontLeft]=motor[BackLeft]=-lx*20;
+		motor[FrontLeft]=motor[BackLeft]=lx*20;
 		motor[FrontRight]=motor[BackRight]=rx*20;
 		lx-=abs((SensorValue[leftDriveEnc]/360)*(int)(3.1415926*(float)(4)));
 		rx-=abs((SensorValue[leftDriveEnc]/360)*(int)(3.1415926*(float)(4)));
